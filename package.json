@@ -1,6 +1,6 @@
 {
   "name": "sequelize-transformations",
-  "version": "2.0.0",
+  "version": "3.0.0-beta.1",
   "description": "Sequelize plugin to add configurable attribute transformations.",
   "homepage": "https://github.com/JaredCrimmins/sequelize-transformations#readme",
   "license": "MIT",
