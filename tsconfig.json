@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "declaration": true,
+    "declarationDir": "lib/",
+    "esModuleInterop": true,
+    "importHelpers": false,
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "outDir": "lib/",
+    "strict": true,
+    "target": "ES6"
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

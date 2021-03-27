@@ -3,13 +3,13 @@
 var assert = require('assert');
 var _ = require('lodash');
 var Sequelize = require('sequelize');
-var sequelizeTransforms = require('..');
+var {sequelizeTransformations} = require('./../');
 
 var sequelize;
 var testString = '  Test String  ';
 
 var modelDefinition = {
-  noTransforms: {
+  noTransformations: {
     type: Sequelize.STRING
   },
   trim: {
@@ -37,20 +37,20 @@ var modelDefinition = {
       return this.setDataValue('customSetter', val + '##');
     }
   },
-  customTransform: {
+  customTransformation: {
     type: Sequelize.STRING,
     append: '(postfix)'
   }
 };
 
 var instanceDefinition = {
-  noTransforms: testString,
+  noTransformations: testString,
   trim: testString,
   lowercase: testString,
   uppercase: testString,
   combined: testString,
   customSetter: testString,
-  customTransform: testString
+  customTransformation: testString
 };
 
 function defineModel() {
@@ -58,14 +58,14 @@ function defineModel() {
   return sequelize.define('Model', _.cloneDeep(modelDefinition));
 }
 
-describe('Sequelize transforms', function() {
+describe('Sequelize transformations', function() {
 
   beforeEach(function() {
-    sequelize = new Sequelize('db', 'u', 'p', {dialect: 'sqlite', operatorsAliases: false});
+    sequelize = new Sequelize('db', 'u', 'p', {dialect: 'mysql'});
   });
 
-  it('default transforms should not fail for null values', function() {
-    sequelizeTransforms(sequelize);
+  it('default transformations should not fail for null values', function() {
+    sequelizeTransformations(sequelize);
 
     var Model = defineModel();
 
@@ -78,23 +78,23 @@ describe('Sequelize transforms', function() {
     });
   });
 
-  it('should run default transforms on configured attributes', function() {
-    sequelizeTransforms(sequelize);
+  it('should run default transformations on configured attributes', function() {
+    sequelizeTransformations(sequelize);
 
     var Model = defineModel();
     var instance = Model.build(instanceDefinition);
 
-    assert.strictEqual(instance.noTransforms, '  Test String  ');
+    assert.strictEqual(instance.noTransformations, '  Test String  ');
     assert.strictEqual(instance.trim, 'Test String');
     assert.strictEqual(instance.lowercase, '  test string  ');
     assert.strictEqual(instance.uppercase, '  TEST STRING  ');
     assert.strictEqual(instance.combined, 'test string');
     assert.strictEqual(instance.customSetter, 'test string##');
-    assert.strictEqual(instance.customTransform, '  Test String  ');
+    assert.strictEqual(instance.customTransformation, '  Test String  ');
   });
 
-  it('should run custom transforms', function() {
-    sequelizeTransforms(sequelize, {
+  it('should run custom transformations', function() {
+    sequelizeTransformations(sequelize, {
       trim: function(val, defintion) {
         return val.toString().replace(/ /g, '*');
       },
@@ -106,26 +106,12 @@ describe('Sequelize transforms', function() {
     var Model = defineModel();
     var instance = Model.build(instanceDefinition);
 
-    assert.strictEqual(instance.noTransforms, '  Test String  ');
+    assert.strictEqual(instance.noTransformations, '  Test String  ');
     assert.strictEqual(instance.trim, '**Test*String**');
     assert.strictEqual(instance.lowercase, '  test string  ');
     assert.strictEqual(instance.uppercase, '  TEST STRING  ');
     assert.strictEqual(instance.combined, '**test*string**');
     assert.strictEqual(instance.customSetter, '**test*string**##');
-    assert.strictEqual(instance.customTransform, '  Test String  (postfix)');
+    assert.strictEqual(instance.customTransformation, '  Test String  (postfix)');
   });
-
-  it('should allow configuration on model', function() {
-    var Model = defineModel();
-
-    var instance = Model.build(instanceDefinition);
-
-    assert.strictEqual(instance.trim, '  Test String  ');
-
-    sequelizeTransforms(Model);
-    instance = Model.build(instanceDefinition);
-
-    assert.strictEqual(instance.trim, 'Test String');
-  });
-
 });

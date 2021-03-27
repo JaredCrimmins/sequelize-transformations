@@ -1,32 +1,41 @@
 {
-  "name": "sequelize-transforms",
+  "name": "sequelize-transformations",
   "version": "2.0.0",
-  "description": "Sequelize plugin to add configurable attribute transforms.",
-  "homepage": "https://github.com/allmas-tn/sequelize-transforms#readme",
+  "description": "Sequelize plugin to add configurable attribute transformations.",
+  "homepage": "https://github.com/JaredCrimmins/sequelize-transformations#readme",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "keywords": [
     "sequelize",
-    "transforms",
-    "trim",
-    "uppercase",
-    "lowercase"
+    "transformations"
   ],
-  "author": "Haykel Ben Jemia <hbj@allmas-tn.com> (http://www.allmas-tn.com)",
+  "author": {
+    "name": "Jared Crimmins",
+    "email": "jared@crimmins.io"
+  },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/allmas-tn/sequelize-transforms.git"
+    "url": "https://github.com/JaredCrimmins/sequelize-transformations.git"
   },
   "bugs": {
-    "url": "https://github.com/allmas-tn/sequelize-transforms/issues"
+    "url": "https://github.com/JaredCrimmins/sequelize-transformations/issues"
   },
   "devDependencies": {
-    "lodash": "^4.17.4",
-    "mocha": "^4.0.1",
-    "sequelize": "^4.13.5",
-    "sqlite3": "^3.1.13"
+    "@types/node": "^14.14.35",
+    "@types/validator": "^13.1.3",
+    "lodash": "^4.17.21",
+    "mocha": "^8.3.2",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2"
+  },
+  "peerDependencies": {
+    "sequelize": ">= 5.0.0"
   },
   "scripts": {
+    "prepare": "npm run clean && npm run compile",
+    "clean": "rm -fr lib/",
+    "compile": "tsc",
     "test": "mocha --reporter spec"
   }
 }
