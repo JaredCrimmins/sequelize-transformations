@@ -1,6 +1,6 @@
 # Sequelize Transformations
 
-[Sequelize](https://github.com/sequelize/sequelize) plugin to add configurable attribute transforms. It allows you to
+[Sequelize](https://github.com/sequelize/sequelize) plugin to add configurable attribute transformations. It allows you to
 define transformation functions to run on attribute values when an instance is updated (through assignment,
 `set`, `build`, `create` etc.). The transformation functions can be enabled and configured on attribute level.
 
@@ -66,21 +66,21 @@ sequelizeTransformations(sequelize, {
 });
 ```
 
-This would override the `trim` transform and add a new one called `append`. Every transform function is called with
+This would override the `trim` transform and add a new one called `append`. Every transformation function is called with
 two parameters: the value to transform and the definition of the attribute being transformed.
 
 ## Notes
 
-* If more than one transform is defined on an attribute, then the order in which they are executed is unpredictable.
-This is generally not an issue as you should not use mutually exclusive transforms together, e.g. `lowercase` and `uppercase`.
-* If an attribute is updated with the `raw` option set to `true`, then the transforms will not be run.
+* If more than one transformation is defined on an attribute, then the order in which they are executed is unpredictable.
+This is generally not an issue as you should not use mutually exclusive transformation together, e.g. `lowercase` and `uppercase`.
+* If an attribute is updated with the `raw` option set to `true`, then the transformation will not be run.
 
 ## TypeScript
 
 ### Activation
 
 ```ts
-import {sequelizeTransformations, ModelAttributeDefinition, TransformationDefinitions} from "sequelizeTransformations";
+import {sequelizeTransformations, ModelAttributeDefinition, TransformationDefinitions} from "sequelize-transformations";
 
 type TransformationDefinitions = {
   removeMilliseconds?: boolean;
