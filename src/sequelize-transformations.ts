@@ -7,23 +7,23 @@ export type TransformationsInit = {
   [name: string]: TransformationFunction;
 }
 
-type DefaultTransformationDefinitions = {
+type DefaultTransformationOptions = {
   trim?: boolean;
   lowercase?: boolean;
   uppercase?: boolean;
 }
 
-export type ModelAttributeDefinition<TransformationDefinitions = {}>
+export type ModelAttributeDefinition<TransformationOptions = {}>
   = ModelAttributeColumnOptions
-    & DefaultTransformationDefinitions
-      & TransformationDefinitions;
+    & DefaultTransformationOptions
+      & TransformationOptions;
 
 
 export type ModelAttributesWithTransformations
-  <TCreationAttributes = {}, TransformationDefinitions = {}>
+  <TCreationAttributes = {}, TransformationOptions = {}>
     = {[key: string]: any} & {
       [name in keyof TCreationAttributes]: DataType
-        | ModelAttributeDefinition<TransformationDefinitions>;
+        | ModelAttributeDefinition<TransformationOptions>;
 }
 
 const defaultTransformations = {
@@ -38,7 +38,7 @@ const defaultTransformations = {
   }
 }
 
-export function sequelizeTransformations<T>
+export function sequelizeTransformations
   (sequelize: Sequelize, transformations: TransformationsInit) {
   sequelize.beforeDefine(attributes => {
     init(attributes, transformations);
