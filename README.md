@@ -80,14 +80,14 @@ This is generally not an issue as you should not use mutually exclusive transfor
 ### Activation
 
 ```ts
-import {sequelizeTransformations, ModelAttributeDefinition, TransformationDefinitions} from "sequelize-transformations";
+import {sequelizeTransformations, ModelAttributeDefinition} from 'sequelize-transformations';
 
-type TransformationDefinitions = {
+type TransformationOptions = {
   removeMilliseconds?: boolean;
 }
 
 sequelizeTransformations(sequelize, {
-  removeMilliseconds: function(date: Date, definition: ModelAttributeDefinition<TransformationDefinitions>) {
+  removeMilliseconds: function(date: Date, definition: ModelAttributeDefinition<TransformationOptions>) {
     if(definition.removeMilliseconds) {
       date?.setMilliseconds(0);
     }
@@ -100,15 +100,15 @@ sequelizeTransformations(sequelize, {
 ### Usage
 
 ```ts
-import {DataTypes, Optional} from "sequelize";
-import {ModelAttributesWithTransformations} from "sequelize-transformations";
+import {DataTypes, Optional} from 'sequelize';
+import {ModelAttributesWithTransformations} from 'sequelize-transformations';
 
 interface ModelAttributes {
   id: number;
   email: string;
 }
 
-interface ModelCreationAttributes extends Optional<ModelAttributes, "id"> {}
+interface ModelCreationAttributes extends Optional<ModelAttributes, 'id'> {}
 
 var Model = sequelize.define('Model', (<ModelAttributesWithTransformations<ModelCreationAttributes>>{
   email: {
