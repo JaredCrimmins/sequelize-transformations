@@ -12,12 +12,15 @@ npm install sequelize-transformations
 
 ## Activation
 
-To activate the plugin for all your models, call the plugin on your `sequelize` instance:
+To activate the plugin for all your models, call the plugin on your `sequelize` instance before you define
+your models:
 
 ```js
 var sequelizeTransformations = require('sequelize-transformations');
 
 sequelizeTransformations(sequelize);
+
+// Now you can define your models
 ```
 
 ## Usage
